@@ -1,5 +1,3 @@
-'use client'
-
 import { cn, formatPrice } from '@/lib/utils'
 import { Button } from './ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
@@ -7,30 +5,20 @@ import { Separator } from './ui/separator'
 import { CHOOSE_PLAN } from '@/config'
 import { HiCheckCircle } from 'react-icons/hi'
 import { BiCheck } from "react-icons/bi"
-import { useState } from 'react'
-import { FaBullseye } from 'react-icons/fa'
 
-const PlanCard = ({ price, description, options, recomended, index }: typeof CHOOSE_PLAN[number] & {index: number}) => {
-	const [isActive, setIsActive] = useState(false)
-	const [selectedPlan, setSelectedPlan] = useState(-1)
-
-	const handleClick = (index:number) => {
-		if (isActive) {
-			setIsActive(false)
-		} else {
-			setIsActive(true)
-			setSelectedPlan(index)
-		}
-		console.log(selectedPlan, index)
-	}
+const PlanCard = ({ price, description, options, recomended, index, isActive, onClick }: typeof CHOOSE_PLAN[number] & {isActive: boolean, index: number, onClick: () => void}) => {
 	return (
 		<Card
-			className={cn('group flex flex-col justify-between min-h-[400px] w-full h-full border md:border-0 shadow-none hover:shadow-sm hover:bg-primary hover:cursor-pointer transition-all duration-150', {
-				'bg-primary': isActive,
+			id={`plan-card-${index}`}
+			className={cn('group flex flex-col justify-between min-h-[400px] w-full h-full border md:border-0 shadow-none hover:shadow-sm hover:bg-secondary-foreground hover:cursor-pointer transition-all duration-150', {
+				'bg-secondary-foreground': isActive,
 			})}
-			onClick={() => handleClick(index)}
+			onClick={onClick}
 		>
 			<CardHeader>
+				{recomended && (
+					<span className='relative text-center text-white -top-9 bg-primary px-2 mx-auto rounded-xl'>Recomended</span>
+				)}
 				<CardTitle className={cn('flex flex-row justify-between group-hover:text-white', {'text-white': isActive})}>
 					<p>{price.label}</p>
 					<p className='font-medium'>{formatPrice(price.price, { removeTrailingZeros: true })}</p>
@@ -43,7 +31,7 @@ const PlanCard = ({ price, description, options, recomended, index }: typeof CHO
 			<CardContent>
 				{options.map((value, index) => (
 					<div key={index} className='mb-2 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0'>
-						<HiCheckCircle className={cn('flex h-3 w-3 translate-y-1 rounded-full text-primary group-hover:text-green-500', {'text-green-500': isActive})} />
+						<HiCheckCircle className={cn('flex h-3 w-3 translate-y-1 rounded-full text-primary group-hover:text-primary', {'text-primary': isActive})} />
 						<div className='space-y-1'>
 							<p className={cn('text-sm font-normal leading-none group-hover:text-white', {'text-white': isActive})}>
 								{value}
@@ -56,7 +44,7 @@ const PlanCard = ({ price, description, options, recomended, index }: typeof CHO
 				<Button
 					variant='outline'
 					className='rounded-lg hover:bg-primary-foreground'>
-					{isActive ?
+					{isActive  ?
 						<>
 							<BiCheck className="inline-block mr-1 text-green-500" />
 							Choosen
