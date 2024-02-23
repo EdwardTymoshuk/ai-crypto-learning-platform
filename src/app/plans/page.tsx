@@ -16,8 +16,8 @@ const Page = () => {
 			</div>
 			<div className='grid grid-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 lg:gap-0 w-full py-4 my-14'>
 				{CHOOSE_PLAN.map((value, index) => (
-					<div className='flex flex-row group'>
-					<PlanCard {...value} key={index} index={index}/>
+					<div key={index} className='flex flex-row group'>
+					<PlanCard {...value} index={index}/>
 					<Separator orientation='vertical' className='hidden md:block group-last:hidden max-lg:group-even:hidden'/>
 					</div>
 				))}
