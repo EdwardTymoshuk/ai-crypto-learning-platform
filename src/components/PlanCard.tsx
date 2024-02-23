@@ -16,11 +16,12 @@ const PlanCard = ({ price, description, options, recomended, index }: typeof CHO
 
 	const handleClick = (index:number) => {
 		if (isActive) {
-			return
+			setIsActive(false)
 		} else {
-			setIsActive(true);
-			setSelectedPlan(index);
+			setIsActive(true)
+			setSelectedPlan(index)
 		}
+		console.log(selectedPlan, index)
 	}
 	return (
 		<Card
@@ -55,7 +56,7 @@ const PlanCard = ({ price, description, options, recomended, index }: typeof CHO
 				<Button
 					variant='outline'
 					className='rounded-lg hover:bg-primary-foreground'>
-					{selectedPlan === index ?
+					{isActive ?
 						<>
 							<BiCheck className="inline-block mr-1 text-green-500" />
 							Choosen
