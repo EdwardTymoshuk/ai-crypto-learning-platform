@@ -6,7 +6,7 @@ import { CHOOSE_PLAN } from '@/config'
 import { HiCheckCircle } from 'react-icons/hi'
 import { BiCheck } from "react-icons/bi"
 
-const PlanCard = ({ price, description, options, recomended, index, isActive, onClick }: typeof CHOOSE_PLAN[number] & {isActive: boolean, index: number, onClick: () => void}) => {
+const PlanCard = ({ price, description, options, recomended, index, isActive, onClick }: typeof CHOOSE_PLAN[number] & {isActive?: boolean, index?: number, onClick?: () => void}) => {
 	return (
 		<Card
 			id={`plan-card-${index}`}
