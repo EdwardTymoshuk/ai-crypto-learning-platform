@@ -7,18 +7,18 @@ import { CHOOSE_PLAN } from '@/config'
 import { useState } from 'react'
 
 const Page = () => {
-	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
+	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null)
 
     const handleCardClick = (index:number) => {
-        setActiveCardIndex(index);
-    };
+        setActiveCardIndex(index)
+    }
 	return (
 		<MaxWidthWrapper className='min-h-screen py-12'>
 			<div className='flex flex-col justify-start'>
-				<h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-4xl">
+				<h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-4xl'>
 					Choose plan to fit your needs.
 				</h1>
-				<h2 className="scroll-m-20 border-b pb-2 text-l lg:text-xl font-semibold tracking-tight first:mt-0 text-muted-foreground">
+				<h2 className='scroll-m-20 border-b pb-2 text-l lg:text-xl font-semibold tracking-tight first:mt-0 text-muted-foreground'>
 					Read all the plans and choose the one that perfectly suits your needs
 				</h2>
 			</div>

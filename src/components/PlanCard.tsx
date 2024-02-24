@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from './ui/separator'
 import { CHOOSE_PLAN } from '@/config'
 import { HiCheckCircle } from 'react-icons/hi'
-import { BiCheck } from "react-icons/bi"
+import { BiCheck } from 'react-icons/bi'
 
 const PlanCard = ({ price, description, options, recomended, index, isActive, onClick }: typeof CHOOSE_PLAN[number] & {isActive?: boolean, index?: number, onClick?: () => void}) => {
 	return (
@@ -46,7 +46,7 @@ const PlanCard = ({ price, description, options, recomended, index, isActive, on
 					className='rounded-lg hover:bg-primary-foreground'>
 					{isActive  ?
 						<>
-							<BiCheck className="inline-block mr-1 text-green-500" />
+							<BiCheck className='inline-block mr-1 text-green-500' />
 							Choosen
 						</>
 						: 'Choose plan'}
