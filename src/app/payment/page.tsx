@@ -2,7 +2,7 @@
 
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import ProgressLine from '@/components/ProgressLine'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -10,28 +10,19 @@ import { CHOOSE_PLAN } from '@/config'
 import { cn, formatPrice } from '@/lib/utils'
 import { PaymentCredentialsValidator, TPaymentCredentialsValidator } from '@/lib/validators/TAuthCredentialsValidator'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Page = () => {
-	const [isCompleted, setIsCompleted] = useState(false)
 
 	const router = useRouter()
-	const { register, handleSubmit, trigger, formState: { errors } } = useForm<TPaymentCredentialsValidator>({
+	const { register, handleSubmit, formState: { errors, isValid } } = useForm<TPaymentCredentialsValidator>({
 		resolver: zodResolver(PaymentCredentialsValidator),
 	})
 	const { price, description } = CHOOSE_PLAN[0]
 
-	const handleClick = async () => {
-		const output = await trigger()
-		!output ? setIsCompleted(false) : setIsCompleted(true)
-	}
-
 	const onSubmit = () => {
-		console.log(isCompleted)
-		setIsCompleted(true)
+		console.log('Submiited')
 	}
 
 	return (
@@ -44,7 +35,7 @@ const Page = () => {
 					Provide your payment details to continue creating an account
 				</h2>
 			</div>
-			<ProgressLine page={3} isCompleted={isCompleted} />
+			<ProgressLine page={3} isCompleted={isValid} />
 			<div className='flex flex-col-reverse md:flex-row py-10 my-auto mx-auto w-full justify-center gap-6'>
 				<div className='grid gap-6 w-full'>
 					<h3 className="scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">Payment details:</h3>
@@ -88,7 +79,13 @@ const Page = () => {
 							</div>
 							<div className='grip gap-1 py-2'>
 							</div>
-							<Button className='rounded-lg' onClick={handleClick}>Confirm</Button>
+							<Button
+								className='rounded-lg transition-opacity duration-300'
+								disabled={!isValid || Object.keys(errors).length > 0}
+							>
+								Confirm
+							</Button>
+
 						</div>
 					</form>
 				</div>
@@ -111,9 +108,7 @@ const Page = () => {
 					>Change</Button>
 				</div>
 			</div>
-			<div className={cn('flex justify-end', {'hidden': !isCompleted})}>
-			<Link href='/payment' className={cn(buttonVariants(), 'rounded-lg')}>Next step</Link>
-			</div>
+
 		</MaxWidthWrapper>
 	)
 }
