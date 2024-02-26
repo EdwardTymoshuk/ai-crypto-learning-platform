@@ -1,9 +1,8 @@
 'use client'
 
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
-import PlanCard from '@/components/PlanCard'
 import ProgressLine from '@/components/ProgressLine'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,8 +10,9 @@ import { CHOOSE_PLAN } from '@/config'
 import { cn, formatPrice } from '@/lib/utils'
 import { PaymentCredentialsValidator, TPaymentCredentialsValidator } from '@/lib/validators/TAuthCredentialsValidator'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Page = () => {
@@ -88,7 +88,7 @@ const Page = () => {
 							</div>
 							<div className='grip gap-1 py-2'>
 							</div>
-							<Button onClick={handleClick}>Confirm</Button>
+							<Button className='rounded-lg' onClick={handleClick}>Confirm</Button>
 						</div>
 					</form>
 				</div>
@@ -110,6 +110,9 @@ const Page = () => {
 						onClick={() => router.back()}
 					>Change</Button>
 				</div>
+			</div>
+			<div className={cn('flex justify-end', {'hidden': !isCompleted})}>
+			<Link href='/payment' className={cn(buttonVariants(), 'rounded-lg')}>Next step</Link>
 			</div>
 		</MaxWidthWrapper>
 	)

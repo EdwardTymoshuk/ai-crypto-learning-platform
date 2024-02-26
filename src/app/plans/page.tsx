@@ -3,13 +3,19 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import PlanCard from '@/components/PlanCard'
 import ProgressLine from '@/components/ProgressLine'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { CHOOSE_PLAN } from '@/config'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const Page = () => {
 	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null)
 	const [isCompleted, setIsCompleted] = useState(false)
+
+	const router = useRouter()
 
     const handleCardClick = (index:number) => {
         setActiveCardIndex(index)
@@ -38,6 +44,9 @@ const Page = () => {
 					<Separator orientation='vertical' className='hidden md:block group-last:hidden max-lg:group-even:hidden'/>
 					</div>
 				))}
+			</div>
+			<div className={cn('flex justify-end', {'hidden': !isCompleted})}>
+			<Link href='/payment' className={buttonVariants()}>Next step</Link>
 			</div>
 		</MaxWidthWrapper>
 	)
