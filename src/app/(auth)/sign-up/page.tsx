@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import { AuthCredentialsValidator, TAuthCredentialsValidator } from '@/lib/validators/TAuthCredentialsValidator'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { GoArrowRight } from 'react-icons/go'
 
@@ -15,14 +16,14 @@ const Page = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<TAuthCredentialsValidator>({
 		resolver: zodResolver(AuthCredentialsValidator),
 	})
-
+	const router = useRouter()
 	const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-		alert(`${email}  ${password}`)
+		router.push('/plans')
 
 	}
 
 	return (
-		<MaxWidthWrapper className='flex justify-center min-h-screen py-12'>
+		<MaxWidthWrapper className='flex flex-col justify-center min-h-screen py-12'>
 			<div className='flex flex-col mx-auto w-full justify-center space-y-6 sm:w-[350px]'>
 				<div className='flex flex-col items-center space-y-2 text-center'>
 					<h1 className='text-2xl font-bold'>
