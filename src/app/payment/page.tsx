@@ -1,6 +1,7 @@
 'use client'
 
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
+import PageHeader from '@/components/PageHeader'
 import ProgressLine from '@/components/ProgressLine'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -22,19 +23,15 @@ const Page = () => {
 	const { price, description } = CHOOSE_PLAN[0]
 
 	const onSubmit = () => {
-		console.log('Submiited')
+		router.push('/create-nft-profile')
 	}
 
 	return (
 		<MaxWidthWrapper className='flex flex-col min-h-screen py-12'>
-			<div className='flex flex-col justify-start'>
-				<h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-4xl">
-					Payment page
-				</h1>
-				<h2 className="scroll-m-20 border-b pb-2 text-l lg:text-xl font-semibold tracking-tight first:mt-0 text-muted-foreground">
-					Provide your payment details to continue creating an account
-				</h2>
-			</div>
+			<PageHeader
+				title='Payment page'
+				subtitle='Provide your payment details to continue creating an account'
+			/>
 			<ProgressLine page={3} isCompleted={isValid} />
 			<div className='flex flex-col-reverse md:flex-row py-10 my-auto mx-auto w-full justify-center gap-6'>
 				<div className='grid gap-6 w-full'>
