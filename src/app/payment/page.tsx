@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 import { CHOOSE_PLAN } from '@/config'
 import { cn, formatPrice } from '@/lib/utils'
-import { PaymentCredentialsValidator, TPaymentCredentialsValidator } from '@/lib/validators/TAuthCredentialsValidator'
+import { PaymentCredentialsValidator, TPaymentCredentialsValidator } from '@/lib/validators/CredentialsValidators'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -86,6 +87,7 @@ const Page = () => {
 						</div>
 					</form>
 				</div>
+				<Separator orientation='vertical' className='h-auto' />
 				<div className='space-y-2 w-full'>
 					<h3 className="scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">Choosen plan:</h3>
 					<Card className='bg-secondary-foreground'>

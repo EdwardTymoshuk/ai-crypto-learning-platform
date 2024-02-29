@@ -13,5 +13,13 @@ export const PaymentCredentialsValidator = z.object({
     email: z.string().email(),
 })
 
+export const CreateNFTProfileCredentialsValidator = z.object({
+    industry: z.string().min(2),
+    currentPosition: z.string().min(2),
+    experience: z.string().min(10),
+    pretendedToBe: z.string().min(2)
+})
+
 export type TAuthCredentialsValidator = z.infer<typeof AuthCredentialsValidator>
 export type TPaymentCredentialsValidator = z.infer<typeof PaymentCredentialsValidator>
+export type TCreateNFTProfileCredentialsValidator = z.infer<typeof CreateNFTProfileCredentialsValidator>
