@@ -13,17 +13,28 @@ import { cn, formatPrice } from '@/lib/utils'
 import { PaymentCredentialsValidator, TPaymentCredentialsValidator } from '@/lib/validators/CredentialsValidators'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Page = () => {
 
 	const router = useRouter()
-	const { register, handleSubmit, formState: { errors, isValid } } = useForm<TPaymentCredentialsValidator>({
+	const [email, setEmail] = useState<string | null>(localStorage.getItem('email'))
+	const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm<TPaymentCredentialsValidator>({
 		resolver: zodResolver(PaymentCredentialsValidator),
 	})
-	const { price, description } = CHOOSE_PLAN[0]
+
+	const storedPlanId = localStorage.getItem('chosenPlan')
+	const { price, description } = CHOOSE_PLAN[Number(storedPlanId)]
+
+	const handleEmailInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target
+		setEmail(value)
+		localStorage.setItem('email', value)
+	}
 
 	const onSubmit = () => {
+		localStorage.setItem('name', getValues().name)
 		router.push('/create-nft-profile')
 	}
 
@@ -72,6 +83,8 @@ const Page = () => {
 
 									})}
 									placeholder='you@example.com'
+									value={email ? email : ''}
+									onChange={handleEmailInputChange}
 								/>
 								{errors?.email && <p className='text-sm text-red-500 pt-2'>{errors.email.message}</p>}
 							</div>

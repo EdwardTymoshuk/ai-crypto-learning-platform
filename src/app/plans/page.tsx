@@ -9,16 +9,25 @@ import { Separator } from '@/components/ui/separator'
 import { CHOOSE_PLAN } from '@/config'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Page = () => {
-	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null)
+	const storedChosenPlan = localStorage.getItem('chosenPlan')
+
+	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(storedChosenPlan !== null ? Number(storedChosenPlan) : null)
 	const [isCompleted, setIsCompleted] = useState(false)
 
 	const handleCardClick = (index: number) => {
 		setActiveCardIndex(index)
 		setIsCompleted(true)
+		localStorage.setItem('chosenPlan', index.toString())
 	}
+
+	useEffect(() => {
+		console.log(activeCardIndex)
+		setIsCompleted(activeCardIndex !== null)
+	}, [activeCardIndex])
+
 	return (
 		<MaxWidthWrapper className='min-h-screen py-12'>
 			<PageHeader

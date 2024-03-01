@@ -20,8 +20,12 @@ const Page = () => {
 		resolver: zodResolver(CreateNFTProfileCredentialsValidator),
 	})
 
+	const storedName = localStorage.getItem('name')
+
 	const onSubmit = () => {
-		console.log('Submited')
+		alert('Woohoo! Your account has been succesfully created!')
+		localStorage.clear()
+
 	}
 
 	return (
@@ -33,7 +37,7 @@ const Page = () => {
 			<ProgressLine page={4} isCompleted={false} />
 			<div className='flex flex-col mx-auto w-full justify-center space-y-6 sm:w-[450px]'>
 				<div className='grid gap-6 w-full'>
-					<h3 className="scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">Hej, Edward!</h3>
+					<h3 className="scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">Hi {storedName || 'there'}!</h3>
 					<span className='text-muted-foreground'>It&apos;s almost done! We'd be very happy to know You better, tell us a little about yourself.</span>
 					<Separator />
 					<form onSubmit={handleSubmit(onSubmit)}>
