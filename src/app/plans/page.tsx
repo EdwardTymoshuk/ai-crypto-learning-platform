@@ -12,7 +12,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 const Page = () => {
-	const storedChosenPlan = localStorage.getItem('chosenPlan')
+	const storedChosenPlan = localStorage?.getItem('chosenPlan')
 
 	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(storedChosenPlan !== null ? Number(storedChosenPlan) : null)
 	const [isCompleted, setIsCompleted] = useState(false)
@@ -20,7 +20,7 @@ const Page = () => {
 	const handleCardClick = (index: number) => {
 		setActiveCardIndex(index)
 		setIsCompleted(true)
-		localStorage.setItem('chosenPlan', index.toString())
+		localStorage?.setItem('chosenPlan', index.toString())
 	}
 
 	useEffect(() => {

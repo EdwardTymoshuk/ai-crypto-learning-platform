@@ -20,11 +20,11 @@ const Page = () => {
 		resolver: zodResolver(CreateNFTProfileCredentialsValidator),
 	})
 
-	const storedName = localStorage.getItem('name')
+	const storedName = localStorage?.getItem('name')
 
 	const onSubmit = () => {
 		alert('Woohoo! Your account has been succesfully created!')
-		localStorage.clear()
+		localStorage?.clear()
 
 	}
 
