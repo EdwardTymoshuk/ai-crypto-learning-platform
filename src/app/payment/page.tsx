@@ -19,7 +19,10 @@ import { useForm } from 'react-hook-form'
 const Page = () => {
 
 	const router = useRouter()
-	const [email, setEmail] = useState<string | null>(localStorage?.getItem('email'))
+	const storedEmail: string | null = typeof window !== 'undefined' ? localStorage.getItem('email') : null
+
+
+	const [email, setEmail] = useState<string | null>(storedEmail)
 	const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm<TPaymentCredentialsValidator>({
 		resolver: zodResolver(PaymentCredentialsValidator),
 	})

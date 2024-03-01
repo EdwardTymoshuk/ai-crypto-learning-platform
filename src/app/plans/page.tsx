@@ -12,7 +12,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 const Page = () => {
-	const storedChosenPlan = localStorage?.getItem('chosenPlan')
+	const storedChosenPlan: string | null = typeof window !== 'undefined' ? localStorage.getItem('chosenPlan') : null
 
 	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(storedChosenPlan !== null ? Number(storedChosenPlan) : null)
 	const [isCompleted, setIsCompleted] = useState(false)
