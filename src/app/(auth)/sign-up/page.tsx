@@ -18,7 +18,7 @@ const Page = () => {
 	})
 	const router = useRouter()
 	const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-		localStorage.setItem('email', email)
+		localStorage?.setItem('email', email)
 		router.push('/plans')
 
 	}

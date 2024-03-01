@@ -19,22 +19,22 @@ import { useForm } from 'react-hook-form'
 const Page = () => {
 
 	const router = useRouter()
-	const [email, setEmail] = useState<string | null>(localStorage.getItem('email'))
+	const [email, setEmail] = useState<string | null>(localStorage?.getItem('email'))
 	const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm<TPaymentCredentialsValidator>({
 		resolver: zodResolver(PaymentCredentialsValidator),
 	})
 
-	const storedPlanId = localStorage.getItem('chosenPlan')
+	const storedPlanId = localStorage?.getItem('chosenPlan')
 	const { price, description } = CHOOSE_PLAN[Number(storedPlanId)]
 
 	const handleEmailInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target
 		setEmail(value)
-		localStorage.setItem('email', value)
+		localStorage?.setItem('email', value)
 	}
 
 	const onSubmit = () => {
-		localStorage.setItem('name', getValues().name)
+		localStorage?.setItem('name', getValues().name)
 		router.push('/create-nft-profile')
 	}
 
