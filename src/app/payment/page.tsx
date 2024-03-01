@@ -19,7 +19,8 @@ import { useForm } from 'react-hook-form'
 const Page = () => {
 
 	const router = useRouter()
-	const storedEmail: string | null = typeof window !== 'undefined' ? localStorage.getItem('email') : null
+	const storedEmail = typeof window !== 'undefined' ? localStorage.getItem('email') : null
+	const storedPlanId = typeof window !== 'undefined' ? localStorage.getItem('chosenPlan') : null
 
 
 	const [email, setEmail] = useState<string | null>(storedEmail)
@@ -27,7 +28,6 @@ const Page = () => {
 		resolver: zodResolver(PaymentCredentialsValidator),
 	})
 
-	const storedPlanId = localStorage?.getItem('chosenPlan')
 	const { price, description } = CHOOSE_PLAN[Number(storedPlanId)]
 
 	const handleEmailInputChange = (e: ChangeEvent<HTMLInputElement>) => {
