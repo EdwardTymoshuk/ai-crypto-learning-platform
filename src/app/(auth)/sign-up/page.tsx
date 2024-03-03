@@ -17,9 +17,11 @@ const Page = () => {
 		resolver: zodResolver(AuthCredentialsValidator),
 	})
 	const router = useRouter()
+
+
 	const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
 		localStorage?.setItem('email', email)
-		router.push('/plans')
+		// router.push('/plans')
 
 	}
 
@@ -70,7 +72,7 @@ const Page = () => {
 								/>
 								{errors?.password && <p className='text-sm text-red-500 pt-2'>{errors.password.message}</p>}
 							</div>
-							<Button>Sign up</Button>
+							<Button>{'Sign up'}</Button>
 						</div>
 					</form>
 				</div>
