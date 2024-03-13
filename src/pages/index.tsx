@@ -13,7 +13,7 @@ const Home = () => {
     if (status === 'unauthenticated') {
       router.push('/sign-in')
     }
-  }, [status])
+  }, [router, status])
 
   return (
     <>

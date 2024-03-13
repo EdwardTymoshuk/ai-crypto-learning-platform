@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import "@/styles/globals.css"
 import { api } from "@/utils/api"
 import { SessionProvider } from "next-auth/react"
@@ -19,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={session}>
-        <main className='relative flex flex-col min-h-screen'>
+        <main className={cn(inter, 'relative flex flex-col min-h-screen')}>
           <div className='flex-grow flex-1'>
             <Component {...pageProps} />
           </div>

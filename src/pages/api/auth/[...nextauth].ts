@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
 				email: { label: "Email", type: "email" },
 				password: { label: "Password", type: "password" },
 			},
-			async authorize(credentials): Promise<any> {
+			async authorize(credentials: Record<"email" | "password", string> | undefined, req: any): Promise<TUser | null> {
 				// Add logic to verify credentials here
 				if (!credentials) return null
 
@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
 
 	// Callbacks for handling session data
 	callbacks: {
-		session: ({ session, token, user }) => {
+		session: ({ session }) => {
 			// Return the session data
 			return session
 		},

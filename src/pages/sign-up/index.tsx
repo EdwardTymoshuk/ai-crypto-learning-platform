@@ -94,7 +94,7 @@ const Page = () => {
 								/>
 								{errors?.password && <p className='text-sm text-red-500 pt-2'>{errors.password.message}</p>}
 							</div>
-							<Button>{'Sign up'}</Button>
+							<Button>{isLoading ? 'Loading...' : 'Sign up'}</Button>
 						</div>
 					</form>
 				</div>

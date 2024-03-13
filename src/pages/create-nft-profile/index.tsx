@@ -11,7 +11,6 @@ import { Textarea } from '@/components/ui/textarea'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { CreateNFTProfileCredentialsValidator, TCreateNFTProfileCredentialsValidator } from '@/lib/validators/CredentialsValidators'
-import { api } from '@/utils/api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -19,8 +18,6 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { MdInfoOutline } from "react-icons/md"
 import secureLocalStorage from 'react-secure-storage'
-import { toast } from 'sonner'
-import { ZodError } from 'zod'
 
 const Page = () => {
 	const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm<TCreateNFTProfileCredentialsValidator>({
@@ -42,28 +39,30 @@ const Page = () => {
 	}, [])
 
 	// const email = typeof window !== 'undefined' ? String(secureLocalStorage.getItem('email')) : ''
-	const password = typeof window !== 'undefined' ? String(secureLocalStorage.getItem('password')) : ''
+	// const password = typeof window !== 'undefined' ? String(secureLocalStorage.getItem('password')) : ''
 	const surname = typeof window !== 'undefined' ? String(secureLocalStorage.getItem('surname')) : ''
 
 	const data = { name, surname, ...getValues() }
 
 
-	const { mutate, isLoading } = api.auth.updateUser.useMutation({
-		onError: (err) => {
-			if (err instanceof ZodError) {
-				toast.error('error')
-				return
-			}
+	// const { mutate, isLoading } = api.user.updateUser.useMutation({
+	// 	onError: (err) => {
+	// 		if (err instanceof ZodError) {
+	// 			toast.error('error')
+	// 			return
+	// 		}
 
-			toast.error('Something went wrong. Please try again later.')
-		},
-		onSuccess: () => {
-			toast.success('Your account was successfully updated.')
-			router.push('/')
-		}
-	})
+	// 		toast.error('Something went wrong. Please try again later.')
+	// 	},
+	// 	onSuccess: () => {
+	// 		toast.success('Your account was successfully updated.')
+	// 		router.push('/')
+	// 	}
+	// })
 
 	const onSubmit = () => {
+		alert(data)
+		router.refresh()
 		// mutate({ ...data })
 	}
 
