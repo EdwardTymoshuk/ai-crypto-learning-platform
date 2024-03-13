@@ -4,7 +4,7 @@ export interface TUser {
     id: string,
     email: string
     password: string
-    role: string
+    role?: string
     name?: string
     surname?: string
     industry?: string
@@ -12,13 +12,14 @@ export interface TUser {
     pretendedToBe?: string
     experience?: string
     image?: string
+    isCompleted: boolean
 }
 
 const userSchema = new Schema<TUser>({
     id: { type: String, required: true, unique: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    role: { type: String, require: true, enum: ['user', 'admin'], default: 'user' },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
     name: { type: String, required: false },
     surname: { type: String, required: false },
     industry: { type: String, required: false },
@@ -26,6 +27,7 @@ const userSchema = new Schema<TUser>({
     pretendedToBe: { type: String, required: false },
     experience: { type: String, required: false },
     image: { type: String, required: false },
+    isCompleted: { type: Boolean, default: false }
 }, {
     timestamps: true,
 })
