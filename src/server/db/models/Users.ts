@@ -16,7 +16,7 @@ export interface TUser {
 }
 
 const userSchema = new Schema<TUser>({
-    id: { type: String, required: true, unique: true },
+    id: { type: String, unique: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
@@ -31,8 +31,6 @@ const userSchema = new Schema<TUser>({
 }, {
     timestamps: true,
 })
-
-export const userSchemaType = userSchema
 
 const User = models?.User as Model<TUser> || model("User", userSchema)
 
