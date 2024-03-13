@@ -1,4 +1,15 @@
-export const CHOOSE_PLAN = [
+type CHOOSE_PLAN_TYPE = {
+    price: {
+        label: string | undefined,
+        price: number | undefined,
+    },
+    description: string,
+    options: string[],
+    recomended: boolean,
+    color: string
+}
+
+export const CHOOSE_PLAN: CHOOSE_PLAN_TYPE[] = [
     {
         price: {
             label: 'Free',
@@ -12,6 +23,7 @@ export const CHOOSE_PLAN = [
             'No upfront cost: get started for free',
         ],
         recomended: false,
+        color: 'free',
     },
     {
         price: {
@@ -27,6 +39,7 @@ export const CHOOSE_PLAN = [
             'Monthly prizes',
         ],
         recomended: false,
+        color: 'premium',
     },
     {
         price: {
@@ -43,6 +56,7 @@ export const CHOOSE_PLAN = [
             'Engage with loteries and gain access to an exclusive reward club',
         ],
         recomended: true,
+        color: 'exclusive',
     },
     {
         price: {
@@ -60,5 +74,6 @@ export const CHOOSE_PLAN = [
             'Dubdomein and QR code with CV and references',
         ],
         recomended: false,
+        color: 'vip',
     },
 ]
