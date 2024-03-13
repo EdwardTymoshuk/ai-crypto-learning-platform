@@ -1,5 +1,5 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+import { createEnv } from "@t3-oss/env-nextjs"
+import { z } from "zod"
 
 export const env = createEnv({
   /**
@@ -10,12 +10,12 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     DB_NAME: z.string().min(1),
     NODE_ENV: z.enum(["development", "test", "production"]),
-    NEXTAUTH_SECRET:
+    NEXT_AUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? z.string().min(1)
         : z.string().min(1).optional(),
-    NEXTAUTH_URL: z.preprocess(
-      // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
+    NEXT_AUTH_URL: z.preprocess(
+      // This makes Vercel deployments not fail if you don't set NEXT_AUTH_URL
       // Since NextAuth.js automatically uses the VERCEL_URL if present.
       (str) => process.env.VERCEL_URL ?? str,
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
@@ -43,8 +43,8 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     DB_NAME: process.env.DB_NAME,
     NODE_ENV: process.env.NODE_ENV,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXT_AUTH_SECRET: process.env.NEXT_AUTH_SECRET,
+    NEXT_AUTH_URL: process.env.NEXT_AUTH_URL,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   },
@@ -53,4 +53,4 @@ export const env = createEnv({
    * This is especially useful for Docker builds.
    */
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
-});
+})
