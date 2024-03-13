@@ -1,4 +1,4 @@
-import { type ClassValue, clsx } from "clsx"
+import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -13,7 +13,7 @@ export function formatPrice(
     removeTrailingZeros?: boolean,
   } = {}
 ) {
-  const {currency = 'USD', notation = 'compact', removeTrailingZeros = false} = options
+  const { currency = 'USD', notation = 'compact', removeTrailingZeros = false } = options
 
   const numericPrice = typeof price === 'string' ? parseFloat(price) : price
   let formattedPrice = new Intl.NumberFormat('en-US', {
@@ -21,12 +21,12 @@ export function formatPrice(
     currency,
     notation,
     maximumFractionDigits: 2,
-  }).format(numericPrice);
+  }).format(numericPrice)
 
   if (removeTrailingZeros) {
-    formattedPrice = formattedPrice.replace(/\.0+$/, '');
+    formattedPrice = formattedPrice.replace(/\.0+$/, '')
   }
 
-  return formattedPrice;
+  return formattedPrice
 }
 
