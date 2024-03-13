@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
 				email: { label: "Email", type: "email" },
 				password: { label: "Password", type: "password" },
 			},
-			async authorize(credentials: Record<"email" | "password", string> | undefined, req: any): Promise<TUser | null> {
+			async authorize(credentials: Record<"email" | "password", string> | undefined): Promise<TUser | null> {
 				// Add logic to verify credentials here
 				if (!credentials) return null
 
