@@ -42,7 +42,7 @@ export const user = createTRPCRouter({
     }),
   getUser: publicProcedure
     .input(z.string().email())
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       try {
         const user = await User.findOne({ email: input })
         if (!user) {
