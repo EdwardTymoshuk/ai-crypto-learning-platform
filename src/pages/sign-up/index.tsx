@@ -25,7 +25,9 @@ const Page = () => {
 	const { mutate, isLoading } = api.user.createUser.useMutation({
 		onError: (err) => {
 			if (err.data?.code === 'CONFLICT') {
-				toast.error(`This email is already in use. Sign in instead?`)
+				toast.error(
+					'This email is already in use. Sign in instead?'
+				)
 				return
 			}
 
@@ -34,7 +36,9 @@ const Page = () => {
 				return
 			}
 
-			toast.error('Something went wrong. Please try again later.')
+			toast.error(
+				'Something went wrong. Please try again.'
+			)
 		},
 		onSuccess: () => {
 			toast.success(`New User was succesfully created`)

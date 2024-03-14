@@ -16,7 +16,7 @@ export interface TUser {
 }
 
 const userSchema = new Schema<TUser>({
-    id: { type: String, unique: true },
+    id: { type: String, required: true, unique: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
