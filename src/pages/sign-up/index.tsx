@@ -42,7 +42,7 @@ const Page = () => {
 		},
 		onSuccess: () => {
 			toast.success(`New User was succesfully created`)
-			router.push('/plans')
+			router.push('/sign-in')
 		}
 	})
 

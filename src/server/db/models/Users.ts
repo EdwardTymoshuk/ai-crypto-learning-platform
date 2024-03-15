@@ -1,19 +1,6 @@
 import { Model, Schema, model, models } from "mongoose"
+import { TUser } from 'next-auth'
 
-export interface TUser {
-    id: string,
-    email: string
-    password: string
-    role?: string
-    name?: string
-    surname?: string
-    industry?: string
-    position?: string
-    pretendedToBe?: string
-    experience?: string
-    image?: string
-    isCompleted: boolean
-}
 
 const userSchema = new Schema<TUser>({
     id: { type: String, required: true, unique: true },
@@ -31,6 +18,7 @@ const userSchema = new Schema<TUser>({
 }, {
     timestamps: true,
 })
+
 
 const User = models?.User as Model<TUser> || model("User", userSchema)
 

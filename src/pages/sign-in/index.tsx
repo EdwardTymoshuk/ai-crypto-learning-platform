@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import { AuthCredentialsValidator, TAuthCredentialsValidator } from '@/lib/validators/CredentialsValidators'
+import { api } from '@/utils/api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -18,11 +19,21 @@ const Page = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<TAuthCredentialsValidator>({
 		resolver: zodResolver(AuthCredentialsValidator),
 	})
-
 	const router = useRouter()
+	const { data: session, status } = useSession()
 
-	const { data: user, status } = useSession()
-	console.log(user, status)
+	/*
+	TO DO: fix: error in console because component can't get user while session is not defined. 
+				Session needs some time for initialization
+	*/
+
+
+	// useEffect(() => {
+	// 	if (session?.user) router.push("/")
+	// }, [session, router])
+
+	const userEmail = session?.user?.email ?? ''
+	const user = api.user.getUser.useQuery(userEmail)
 
 	const onSubmit = async ({ email, password }: TAuthCredentialsValidator) => {
 		const result = await signIn("credentials", {
@@ -31,11 +42,13 @@ const Page = () => {
 			password,
 		})
 
-		console.log(result)
-
 		if (!result?.error) {
-			router.push("/")
-			return
+			toast.success('You were successfully logined')
+			if (!user?.data?.isCompleted) {
+				router.push("/plans")
+			} else {
+				router.push("/")
+			}
 		} else {
 			toast.error(`Authentication failed`)
 			console.error(`Authentication failed: ${result.error}`)
@@ -90,7 +103,11 @@ const Page = () => {
 								/>
 								{errors?.password && <p className='text-sm text-red-500 pt-2'>{errors.password.message}</p>}
 							</div>
-							<Button>Sing in</Button>
+							<Button>
+								{
+									'Sing in'
+								}
+							</Button>
 						</div>
 					</form>
 					<div className='relative'>

@@ -6,6 +6,7 @@ import User from '@/server/db/models/Users'
 import connectMongoDB from '@/server/db/mongodb'
 import { TRPCError } from '@trpc/server'
 import bcrypt from 'bcryptjs'
+import { TUser } from 'next-auth'
 import { v4 as uuidv4 } from 'uuid'
 import { z } from 'zod'
 
@@ -41,10 +42,10 @@ export const user = createTRPCRouter({
       }
     }),
   getUser: publicProcedure
-    .input(z.string().email())
+    .input(z.string().email() || undefined)
     .query(async ({ input }) => {
       try {
-        const user = await User.findOne({ email: input })
+        const user: TUser | null = await User.findOne({ email: input })
         if (!user) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
         }
@@ -54,4 +55,27 @@ export const user = createTRPCRouter({
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch user' })
       }
     }),
+  updateUser: publicProcedure
+    .input(z.object({
+      email: z.string().email(),
+      data: z.any()
+    }))
+    .mutation(async ({ input }) => {
+      try {
+        const { email, data } = input
+
+        await connectMongoDB()
+
+        const user = await User.findOneAndUpdate(
+          { email },
+          { $set: data },
+          { new: true }
+        )
+
+        return { success: true, user }
+      } catch (error) {
+        console.error('Error updating user:', error)
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to update user' })
+      }
+    })
 })

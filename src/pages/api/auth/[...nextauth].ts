@@ -5,10 +5,9 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import { TRPCError } from '@trpc/server'
 import bcrypt from "bcryptjs"
 import { GetServerSidePropsContext } from 'next'
-import NextAuth, { NextAuthOptions, getServerSession } from "next-auth"
+import NextAuth, { NextAuthOptions, TUser, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
-import { TUser } from './../../../server/db/models/Users'
 
 
 // List of admin emails for authorization
@@ -64,6 +63,7 @@ export const authOptions: NextAuthOptions = {
 	// Session configuration
 	session: {
 		strategy: "jwt", // Use JWT for session management
+
 	},
 
 	jwt: {
@@ -78,8 +78,13 @@ export const authOptions: NextAuthOptions = {
 
 	// Callbacks for handling session data
 	callbacks: {
-		session: ({ session }) => {
-			// Return the session data
+		jwt: async ({ token, user }) => {
+			if (user && user.name) {
+				token.name = user.name
+			}
+			return token
+		},
+		session: async ({ session }) => {
 			return session
 		},
 	},

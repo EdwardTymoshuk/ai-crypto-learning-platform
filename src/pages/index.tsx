@@ -7,7 +7,6 @@ const Home = () => {
   const router = useRouter()
 
   const { data: session, status } = useSession()
-  console.log(session, status)
 
   useEffect(() => {
     if (status === 'unauthenticated') {

@@ -13,16 +13,27 @@ declare module "next-auth" {
       email: string,
       password: string,
       role: string,
-      image: string
+      image: string,
+      isCompleted: boolean
     },
     session: Session,
     token: string
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  export interface TUser {
+    id: string,
+    email: string
+    password: string
+    role?: string
+    name?: string
+    surname?: string
+    industry?: string
+    position?: string
+    pretendedToBe?: string
+    experience?: string
+    image?: string
+    isCompleted: boolean
+  }
 }
 
 
