@@ -31,7 +31,6 @@ const Home = ({ user }: { user: TUser }) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getSession } = await import('next-auth/react')
-  const { api } = await import('@/utils/api')
 
   const session = await getSession(context)
   console.log('Session: ', session)
