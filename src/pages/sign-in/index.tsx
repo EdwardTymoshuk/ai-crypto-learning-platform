@@ -37,11 +37,6 @@ const Page = () => {
 		}
 	}
 
-	// if (session) {
-	// 	router.push("/")
-	// 	return null
-	// }
-
 	return (
 		<div className='flex flex-col md:flex-row w-full min-h-screen justify-center items-center'>
 			<div className='w-full flex-1 p-8 flex flex-col justify-center max-w-screen-sm'>

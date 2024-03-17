@@ -3,11 +3,9 @@ import User from '@/server/db/models/Users'
 import { GetServerSidePropsContext } from 'next'
 import { TUser } from 'next-auth'
 import { signOut, useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
 import secureLocalStorage from 'react-secure-storage'
 
 const Home = ({ user }: { user: TUser }) => {
-  const router = useRouter()
   const { data: session, status } = useSession()
 
   const userEmail = session?.user.email

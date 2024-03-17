@@ -24,7 +24,6 @@ const Page = () => {
 	const { data } = api.user.getUser.useQuery(session ? session?.user.email : '')
 	const userEmail = session?.user.email || ''
 	const storedChosenPlan = data?.plan
-	// const storedChosenPlan = typeof window !== 'undefined' ? secureLocalStorage.getItem('chosenPlan') : null
 
 	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(storedChosenPlan !== null ? Number(storedChosenPlan) : null)
 	const [isCompleted, setIsCompleted] = useState(false)
