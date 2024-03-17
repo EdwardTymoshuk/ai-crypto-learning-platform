@@ -4,5 +4,9 @@ export default withAuth({
 	pages: {
 		signIn: '/sign-in',
 	},
-	exclude: ['/sign-up']
+	callbacks: {
+		authorized: ({ req, token }) =>
+			req.nextUrl.pathname === '/sign-up' ||
+			!!token,
+	}
 })
