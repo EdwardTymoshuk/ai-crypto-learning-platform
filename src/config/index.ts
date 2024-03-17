@@ -1,4 +1,4 @@
-type CHOOSE_PLAN_TYPE = {
+export type CHOOSE_PLAN_TYPE = {
     price: {
         label: string | undefined,
         price: number | undefined,

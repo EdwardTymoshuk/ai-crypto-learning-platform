@@ -27,6 +27,7 @@ declare module "next-auth" {
     role?: string
     name?: string
     surname?: string
+    plan?: number
     industry?: string
     position?: string
     pretendedToBe?: string

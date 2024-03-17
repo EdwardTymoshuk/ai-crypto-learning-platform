@@ -65,7 +65,7 @@ export const user = createTRPCRouter({
         const { email, data } = input
 
         await connectMongoDB()
-
+        console.log(data)
         const user = await User.findOneAndUpdate(
           { email },
           { $set: data },

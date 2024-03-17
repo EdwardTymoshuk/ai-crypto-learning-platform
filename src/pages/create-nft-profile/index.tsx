@@ -30,7 +30,7 @@ const Page = () => {
 
 	const { data: session } = useSession()
 	const userEmail = session?.user.email || ''
-	const data = { ...getValues() }
+	const data = { ...getValues(), isCompleted: true }
 
 	const userData = api.user.getUser.useQuery(userEmail)
 
@@ -45,13 +45,12 @@ const Page = () => {
 		},
 		onSuccess: () => {
 			toast.success('Your account was successfully updated.')
-			// router.push('/')
+			router.push('/')
 		}
 	})
 
 	const onSubmit = () => {
 		if (Object.keys(data).length === 0) {
-			// Ви можете додати тут логіку або повідомлення для користувача, що дані не вказані
 			return
 		}
 		mutate({ email: userEmail, data: data })

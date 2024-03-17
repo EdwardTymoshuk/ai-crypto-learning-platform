@@ -9,6 +9,7 @@ const userSchema = new Schema<TUser>({
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     name: { type: String, required: false },
     surname: { type: String, required: false },
+    plan: { type: Number, required: false },
     industry: { type: String, required: false },
     position: { type: String, required: false },
     pretendedToBe: { type: String, required: false },

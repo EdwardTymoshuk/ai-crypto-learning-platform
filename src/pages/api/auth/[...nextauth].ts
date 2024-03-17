@@ -67,11 +67,11 @@ export const authOptions: NextAuthOptions = {
 	},
 
 	jwt: {
-		secret: process.env.NEXT_AUTH_SECRET,
+		secret: process.env.NEXTAUTH_SECRET,
 	},
 
 	// Secret used to encrypt the session data
-	secret: process.env.NEXT_AUTH_SECRET,
+	secret: process.env.NEXTAUTH_SECRET,
 
 	// MongoDB adapter for storing NextAuth data
 	adapter: MongoDBAdapter(clientPromise),
@@ -84,10 +84,17 @@ export const authOptions: NextAuthOptions = {
 			}
 			return token
 		},
-		session: async ({ session }) => {
+		session: async ({ session, user }) => {
+			if (user && user.name) {
+				session.user.name = user.name
+			}
 			return session
 		},
 	},
+	pages: {
+		signIn: '/sign-in'
+	}
+
 }
 
 // Export the configured NextAuth instance
