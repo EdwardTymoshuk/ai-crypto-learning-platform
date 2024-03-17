@@ -33,7 +33,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getSession } = await import('next-auth/react')
 
   const session = await getSession(context)
-  console.log('Session: ', session)
   if (!session || !session.user) {
     return {
       redirect: {
@@ -46,7 +45,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const userEmail = session.user.email
   try {
     const user = await User.findOne({ email: userEmail })
-    console.log('Response: ', user)
     if (!user) {
       throw new Error('Failed to fetch user data')
     }
@@ -61,7 +59,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
 
     return {
-      props: { userEmail },
+      props: { user },
     }
   } catch (error) {
     console.error('Error fetching user data:', error)
