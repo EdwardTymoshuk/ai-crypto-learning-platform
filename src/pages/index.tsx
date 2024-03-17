@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import User from '@/server/db/models/Users'
+import connectMongoDB from '@/server/db/mongodb'
 import { GetServerSidePropsContext } from 'next'
 import { TUser } from 'next-auth'
 import { signOut, useSession } from 'next-auth/react'
@@ -9,6 +10,7 @@ const Home = ({ user }: { user: TUser }) => {
   const { data: session, status } = useSession()
 
   const userEmail = session?.user.email
+
 
   const handleSignOut = () => {
     signOut()
@@ -44,7 +46,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const userEmail = session.user.email
   try {
-    const user = await User.findOne({ email: userEmail })
+    connectMongoDB()
+    const user = await User.findOne({ email: userEmail }).then(res => JSON.parse(JSON.stringify(res)))
     if (!user) {
       throw new Error('Failed to fetch user data')
     }
