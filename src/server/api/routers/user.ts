@@ -21,13 +21,11 @@ export const user = createTRPCRouter({
     .mutation(async (opts) => {
       try {
         const { email, password } = opts.input
-
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10)
 
         // Connect to MongoDB
         await connectMongoDB()
-
         // Check if user with the email already exists
         const existingUser = await User.findOne({ email })
         if (existingUser) throw new TRPCError({ code: 'CONFLICT' })

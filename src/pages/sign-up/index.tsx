@@ -12,7 +12,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { GoArrowRight } from 'react-icons/go'
-import secureLocalStorage from 'react-secure-storage'
 import { toast } from 'sonner'
 import { ZodError } from 'zod'
 
@@ -47,7 +46,6 @@ const Page = () => {
 	})
 
 	const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-		secureLocalStorage.setItem('email', email)
 		mutate({ email, password })
 	}
 
