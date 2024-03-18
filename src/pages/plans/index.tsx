@@ -8,25 +8,25 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { CHOOSE_PLAN } from '@/config'
 import { cn } from '@/lib/utils'
+import User from '@/server/db/models/Users'
+import connectMongoDB from '@/server/db/mongodb'
 import { api } from '@/utils/api'
-import { signOut, useSession } from 'next-auth/react'
+import { GetServerSidePropsContext } from 'next'
+import { TUser } from 'next-auth'
+import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import secureLocalStorage from 'react-secure-storage'
 import { ZodError } from 'zod'
 
-const Page = () => {
+const Page = ({ user: { email, plan } }: { user: TUser }) => {
 	const router = useRouter()
-	const { data: session, status } = useSession()
 
-	if (session?.user.isCompleted) router.push('/')
-
-	const { data } = api.user.getUser.useQuery(session ? session?.user.email : '')
-	const userEmail = session?.user.email || ''
-	const storedChosenPlan = data?.plan
-
-	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(storedChosenPlan !== null ? Number(storedChosenPlan) : null)
+	const [activeCardIndex, setActiveCardIndex] = useState<number | null>(plan || null)
 	const [isCompleted, setIsCompleted] = useState(false)
+
+	useEffect(() => {
+		setIsCompleted(!!plan)
+	}, [])
 
 	const { mutate, isLoading } = api.user.updateUser.useMutation({
 		onError: (err) => {
@@ -48,26 +48,7 @@ const Page = () => {
 	}
 
 	const nextStep = () => {
-		mutate({ email: userEmail, data: { plan: activeCardIndex } })
-	}
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				if (status === 'authenticated' && session) {
-					setIsCompleted(activeCardIndex !== null)
-				}
-			} catch (error) {
-				console.error('Error fetching user data:', error)
-			}
-		}
-
-		fetchData()
-	}, [status, session, activeCardIndex])
-
-	const handleSignOut = () => {
-		signOut()
-		secureLocalStorage.clear()
+		mutate({ email, data: { plan: activeCardIndex } })
 	}
 
 	return (
@@ -76,7 +57,7 @@ const Page = () => {
 				title='Choose plan to fit your needs'
 				subtitle='Read all the plans and choose the one that perfectly suits your needs'
 			/>
-			<Button variant='secondary' onClick={() => handleSignOut()}>Log out</Button>
+			<Button variant='secondary' onClick={() => signOut()}>Log out</Button>
 			<ProgressLine page={2} isCompleted={isCompleted} />
 			<div className='grid grid-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 lg:gap-0 w-full py-4 my-14'>
 				{CHOOSE_PLAN.map((value, index) => (
@@ -99,3 +80,38 @@ const Page = () => {
 }
 
 export default Page
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+	const { getSession } = await import('next-auth/react')
+
+	const session = await getSession(context)
+	if (!session || !session.user) {
+		return {
+			redirect: {
+				destination: '/sign-in',
+				permanent: false,
+			},
+		}
+	}
+
+	try {
+		connectMongoDB()
+		const userEmail = session?.user?.email
+		const user = await User.findOne({ email: userEmail }).then(res => JSON.parse(JSON.stringify(res)))
+		if (!user) {
+			throw new Error('Failed to fetch user data')
+		}
+
+		return {
+			props: { user },
+		}
+	} catch (error) {
+		console.error('Error fetching user data:', error)
+		return {
+			redirect: {
+				destination: '/error',
+				permanent: false,
+			},
+		}
+	}
+}

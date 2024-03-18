@@ -40,7 +40,7 @@ const Page = () => {
 			)
 		},
 		onSuccess: () => {
-			toast.success(`New User was succesfully created`)
+			toast.success(`New User was succesfully created. Now you can sign in to your account`)
 			router.push('/sign-in')
 		}
 	})
