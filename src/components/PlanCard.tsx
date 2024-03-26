@@ -1,3 +1,5 @@
+'use client'
+
 import { CHOOSE_PLAN } from '@/config'
 import { cn, formatPrice } from '@/lib/utils'
 import { BiCheck } from 'react-icons/bi'
