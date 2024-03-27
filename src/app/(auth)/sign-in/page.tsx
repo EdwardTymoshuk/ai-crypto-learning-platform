@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { FaFacebookF, FaGoogle, FaLinkedinIn, FaTelegramPlane } from "react-icons/fa"
+import { FaFacebookF, FaGoogle, FaLinkedinIn, FaTelegramPlane } from 'react-icons/fa'
 import { GoArrowRight } from 'react-icons/go'
 import { toast } from 'sonner'
 
@@ -30,7 +30,7 @@ const Page = () => {
 
 
 	const onSubmit = async ({ email, password }: TAuthCredentialsValidator) => {
-		const result = await signIn("credentials", {
+		const result = await signIn('credentials', {
 			redirect: false,
 			email,
 			password,
@@ -44,6 +44,19 @@ const Page = () => {
 			router.push('/')
 		}
 	}
+
+	const onSocialSignIn = async (adapter: string) => {
+		try {
+			await signIn(`${adapter}`, {
+				callbackUrl: '/'
+			})
+		} catch (error) {
+			console.error(`Authentication failed: ${error}`)
+			toast.error('Authentication failed')
+		}
+
+	}
+
 
 	return (
 		<div className='flex flex-col md:flex-row w-full min-h-screen justify-center items-center'>
@@ -111,33 +124,41 @@ const Page = () => {
 						</div>
 					</div>
 					<div className='flex flex-row items-center gap-4 justify-around text-center'>
-						<div className='text-sm flex flex-row items-center justify-center gap-1 border flex-1 py-2 rounded-lg bg-[#3e5996]'>
-							<Link href=''>
-								<FaFacebookF size={24} color='white' />
-							</Link>
-						</div>
-						<div className='text-sm flex flex-row items-center justify-center gap-1 border flex-1 py-2 rounded-lg bg-[#e2432e]'>
-							<Link href=''>
-								<FaGoogle color='white' size={24} />
-							</Link>
-						</div>
-						<div className='text-sm flex flex-row items-center justify-center gap-1 border flex-1 py-2 rounded-lg bg-[#2cb0ed]'>
-							<Link href=''>
-								<FaTelegramPlane color='white' size={24} />
-							</Link>
-						</div>
-						<div className='text-sm flex flex-row items-center justify-center gap-1 border flex-1 py-2 rounded-lg bg-[#1973b1]'>
-							<Link href=''>
-								<FaLinkedinIn color='white' size={24} />
-							</Link>
-						</div>
+						<Button
+							className='text-sm flex flex-row items-center justify-center gap-1 border flex-1 py-2 rounded-lg bg-facebook hover:bg-facebook-foreground'
+							onClick={() => onSocialSignIn('facebook')}
+						>
+							<FaFacebookF size={24} color='white' />
+						</Button>
+
+						<Button
+							className='text-sm flex flex-row items-center justify-center gap-1 border flex-1 py-2 rounded-lg bg-google hover:bg-google-foreground'
+							onClick={() => onSocialSignIn('google')}
+						>
+							<FaGoogle color='white' size={24} />
+						</Button>
+
+						<Button
+							className='text-sm flex flex-row items-center justify-center gap-1 border flex-1 py-2 rounded-lg bg-telegram hover:bg-telegram-foreground'
+							onClick={() => console.log('Telegram login')}
+						>
+							<FaTelegramPlane color='white' size={24} />
+						</Button>
+						<Button
+							className='text-sm flex flex-row items-center justify-center gap-1 border flex-1 py-2 rounded-lg bg-linkedin hover:bg-linkedin-foreground'
+							onClick={() => onSocialSignIn('linkedin')}
+						>
+							<FaLinkedinIn color='white' size={24} />
+						</Button>
 					</div>
 				</div>
 			</div>
 			<div className='bg-secondary flex-1 h-screen hidden lg:flex'>
 			</div>
 		</div>
+
 	)
+
 }
 
 export default Page

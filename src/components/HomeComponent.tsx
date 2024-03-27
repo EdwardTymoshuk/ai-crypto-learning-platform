@@ -3,27 +3,36 @@
 import { api } from '@/app/_trpc/client'
 import { useUser } from '@/app/context/UserContext'
 import SignOutButton from '@/components/SignOutButton'
+import { useQuery } from '@tanstack/react-query'
 import { Session } from 'next-auth'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
 
 const HomeComponent = ({ session }: { session: Session | null }) => {
   const router = useRouter()
   const { user, setUser } = useUser()
+
+  if (!session) console.log('No session')
+
   const email = session?.user.email || ''
-  const { data: fetchedUser, status } = api.user.getUser.useQuery(email)
+  if (!email) console.log('No email')
 
-  useEffect(() => {
-    if (user && !user.isCompleted) {
-      router.push('/plans')
-    }
-    if (status === 'success' && !user) setUser(fetchedUser)
+  const { data, status } = useQuery(['user', email], () => api.user.getUser.useQuery(email))
 
-  }, [user, status, fetchedUser, router, setUser])
+  if (status === 'loading') return (
+    <div>
+      <p>Loading user...</p>
+    </div>
+  )
+
+  if (status === 'success' && !user) setUser(data?.data || null)
+
+  if (user && (!user.isCompleted || user.isCompleted === null)) {
+    router.push('/plans')
+  }
 
   return (
     <div>
-      <h1>Hello, {user?.name || user?.email}</h1>
+      <h1>Hello, {session?.user.name || email || user?.name || user?.email}</h1>
       <SignOutButton variant='secondary' />
     </div>
   )

@@ -18,15 +18,18 @@ const UserContext = createContext<UserContextInterface>({
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<TUser | null>(null)
 
-	const { data: session } = useSession()
+	const { data: session, status: sessiionStatus } = useSession()
+
+
+
 	const email = session?.user.email || ''
 	const { data: fetchedUser, status } = api.user.getUser.useQuery(email)
 
 	useEffect(() => {
-		if (status === 'success') {
+		if (status === 'success' && !user) {
 			setUser(fetchedUser)
 		}
-	}, [session, status, fetchedUser])
+	}, [user, session, status, fetchedUser])
 
 	const value = {
 		user,

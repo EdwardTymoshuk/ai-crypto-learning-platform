@@ -38,6 +38,18 @@
     --premium: '#CD7F32';
     --exclusive: '#C0C0C0';
     --vip: '#FFD700';
+
+    --google: '#E2432E';
+    --google-hover: '#E75E4B';
+
+    --facebook: '#3E5996';
+    --facebook-hover: '#4766AE';
+
+    --telegram: '#2CB0ED';
+    --telegram-hover: '#43B8EF';
+
+    --linkedin: '#1973B1';
+    --linkedin-hover: '#1C81C4';
   }
 
   .dark {

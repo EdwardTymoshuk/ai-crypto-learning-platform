@@ -55,7 +55,24 @@ const config = {
         free: '#9CDE9F',
         premium: '#CD7F32',
         exclusive: '#C0C0C0',
-        vip: '#FFD700'
+        vip: '#FFD700',
+
+        google: {
+          DEFAULT: '#E2432E',
+          foreground: '#E75E4B',
+        },
+        facebook: {
+          DEFAULT: '#3E5996',
+          foreground: '#4766AE',
+        },
+        telegram: {
+          DEFAULT: '#2CB0ED',
+          foreground: '#43B8EF',
+        },
+        linkedin: {
+          DEFAULT: '#1973B1',
+          foreground: '#1C81C4',
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -17,7 +17,6 @@ const PlanCard = ({ price, description, options, recomended, index, isActive, co
 			})}
 			onClick={onClick}
 		>
-
 			<CardHeader className='relative'>
 				{recomended && (
 					<div className='flex justify-center'>
@@ -26,7 +25,7 @@ const PlanCard = ({ price, description, options, recomended, index, isActive, co
 					</div>
 				)}
 				<CardTitle className={cn('flex flex-row justify-between group-hover:text-white', { 'text-white': isActive })}>
-					<p className={`bg-${color} py-1 px-2 rounded-xl`}>{price.label}</p>
+					<p className={`bg-${color ? color : 'black'} py-1 px-2 rounded-xl`}>{price.label}</p>
 					<p className='font-medium'>{price && price && typeof price.price === 'number' ? formatPrice(price.price, { removeTrailingZeros: true }) : ''}</p>
 				</CardTitle>
 				<CardDescription className={cn('group-hover:text-muted text-sm pt-2 pb-4', { 'text-muted': isActive })}>

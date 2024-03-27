@@ -41,6 +41,7 @@ export const user = createTRPCRouter({
     .input(z.string().email() || undefined)
     .query(async ({ input }) => {
       try {
+        await connectMongoDB()
         const user: TUser | null = await User.findOne({ email: input })
         if (!user) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
