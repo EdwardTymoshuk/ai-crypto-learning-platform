@@ -36,7 +36,9 @@ export function Providers({ children, session }: { children: React.ReactNode, se
 			<QueryClientProvider client={queryClient}>
 				<SessionProvider session={session}>
 					<UserProvider>
+
 						{children}
+
 					</UserProvider>
 				</SessionProvider>
 			</QueryClientProvider>

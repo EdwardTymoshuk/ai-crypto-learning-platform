@@ -22,6 +22,7 @@ const Page = () => {
 	const router = useRouter()
 	const { status } = useSession()
 
+
 	useEffect(() => {
 		if (status === 'authenticated') {
 			router.push('/')
@@ -56,7 +57,6 @@ const Page = () => {
 		}
 
 	}
-
 
 	return (
 		<div className='flex flex-col md:flex-row w-full min-h-screen justify-center items-center'>
@@ -106,7 +106,7 @@ const Page = () => {
 								/>
 								{errors?.password && <p className='text-sm text-red-500 pt-2'>{errors.password.message}</p>}
 							</div>
-							<Button>
+							<Button className=''>
 								{
 									'Sing in'
 								}
@@ -153,7 +153,7 @@ const Page = () => {
 					</div>
 				</div>
 			</div>
-			<div className='bg-secondary flex-1 h-screen hidden lg:flex'>
+			<div className='bg-gradient-to-tr from-[#0368FF] to-[#FF3E95] flex-1 h-screen hidden lg:flex'>
 			</div>
 		</div>
 

@@ -3,7 +3,6 @@
 import { TUser } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
-import { api } from '../_trpc/client'
 
 interface UserContextInterface {
 	user: TUser | null,
@@ -23,7 +22,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 
 	const email = session?.user.email || ''
-	const { data: fetchedUser, status } = api.user.getUser.useQuery(email)
+	// const { data: fetchedUser, status } = api.user.getUser.useQuery(email)
+	const fetchedUser = null
+	const status = 'success'
 
 	useEffect(() => {
 		if (status === 'success' && !user) {
