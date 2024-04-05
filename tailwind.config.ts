@@ -19,11 +19,25 @@ const config = {
     },
     extend: {
       colors: {
+        text: {
+          primary: "hsl(var(--text-primary))",
+          secondary: "hsl(var(--text-secondary))"
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        gradient: {
+          primary: {
+            from: "hsl(var(--gradient-primary-from))",
+            to: "hsl(var(--gradient-primary-to))"
+          },
+          secondary: {
+            from: "hsl(var(--gradient-secondary-from))",
+            to: "hsl(var(--gradient-secondary-to))"
+          }
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -52,27 +66,17 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        free: '#9CDE9F',
-        premium: '#CD7F32',
-        exclusive: '#C0C0C0',
-        vip: '#FFD700',
+        plan: {
+          free: "hsl(var(--plan-free))",
+          premium: "hsl(var(--plan-premium))",
+          exclusive: "hsl(var(--plan-exclusive))",
+          vip: "hsl(var(--plan-vip))",
+        },
 
-        google: {
-          DEFAULT: '#E2432E',
-          foreground: '#E75E4B',
-        },
-        facebook: {
-          DEFAULT: '#3E5996',
-          foreground: '#4766AE',
-        },
-        telegram: {
-          DEFAULT: '#2CB0ED',
-          foreground: '#43B8EF',
-        },
-        linkedin: {
-          DEFAULT: '#1973B1',
-          foreground: '#1C81C4',
-        },
+        google: "hsl(var(--google))",
+        facebook: "hsl(var(--facebook))",
+        telegram: "hsl(var(--telegram))",
+        linkedin: "hsl(var(--linkedin))",
       },
       borderRadius: {
         lg: "var(--radius)",

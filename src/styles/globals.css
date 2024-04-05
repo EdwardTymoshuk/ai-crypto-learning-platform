@@ -4,19 +4,28 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 251 38% 18%;
     --foreground: 240 10% 3.9%;
 
-    --card: 0 0% 100%;
+    --text-primary: 248 100% 97%;
+    --text-secondary: 0 0% 13%;
+
+    --gradient-primary-from: 216 100% 51%;
+    --gradient-primary-to: 333 100% 62%;
+
+    --gradient-secondary-from: 216 100% 51%;
+    --gradient-secondary-to: 217, 100%, 67%;
+
+    --card: 216 100% 51%;
     --card-foreground: 240 10% 3.9%;
 
-    --popover: 0 0% 100%;
+    --popover: 251 38% 18%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 6.5 44.5% 44.5%;
+    --primary: 333 100% 62%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 207.2 49.2% 74.5%;
+    --secondary: 216 100% 51%;
     --secondary-foreground: 240 5.9% 10%;
 
     --muted: 240 4.8% 95.9%;
@@ -34,25 +43,18 @@
 
     --radius: 0.5rem;
 
-    --free: '#9CDE9F';
-    --premium: '#CD7F32';
-    --exclusive: '#C0C0C0';
-    --vip: '#FFD700';
+    --plan-free: 123 50% 74%;
+    --plan-premium: 30 61% 50%;
+    --plan-exclusive: 0 0% 75%;
+    --plan-vip: 51 100% 50%;
 
-    --google: '#E2432E';
-    --google-hover: '#E75E4B';
-
-    --facebook: '#3E5996';
-    --facebook-hover: '#4766AE';
-
-    --telegram: '#2CB0ED';
-    --telegram-hover: '#43B8EF';
-
-    --linkedin: '#1973B1';
-    --linkedin-hover: '#1C81C4';
+    --google: 7 76% 53%;
+    --facebook: 222 42% 42%;
+    --telegram: 199 84% 55%;
+    --linkedin: 204 75% 40%;
   }
 
-  .dark {
+  /* .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
 
@@ -80,7 +82,7 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
-  }
+  } */
 }
 
 @layer base {
@@ -89,6 +91,6 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-text-primary;
   }
 }
