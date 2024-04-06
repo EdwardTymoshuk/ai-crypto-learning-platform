@@ -5,9 +5,20 @@ export const AuthCredentialsValidator = z.object({
     password: z.string().min(8, {
         message: 'Password must be at least 8 characters long.'
     }),
+    confirmPassword: z.string().min(8, {
+        message: 'Password must be at least 8 characters long.'
+    }),
     role: z.enum(['user', 'admin']).optional().default('user'),
     isCompleted: z.boolean().default(false)
-})
+}).refine(
+    (values) => {
+        return values.password === values.confirmPassword
+    },
+    {
+        message: "Provided passwords doesn't match.",
+        path: ["confirmPassword"],
+    }
+)
 
 export const PaymentCredentialsValidator = z.object({
     name: z.string().min(2),

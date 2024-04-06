@@ -71,7 +71,33 @@ const Page = () => {
 				<div className='grid gap-6'>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className='grid gap-2'>
-							<div className='grip gap-1 py-2'>
+							<div className='flex flex-row gap-2'>
+								<div className='flex flex-col gap-1 w-full py-2'>
+									<Label htmlFor='name'>First name</Label>
+									<Input
+										{...register('email')}
+										className={cn({
+											'focus-visible:ring-red-500': errors.email
+
+										})}
+										placeholder='First name'
+									/>
+									{errors?.email && <p className='text-sm text-red-500 pt-2'>{errors.email.message}</p>}
+								</div>
+								<div className='flex flex-col gap-1 w-full py-2'>
+									<Label htmlFor='name'>Last name</Label>
+									<Input
+										{...register('email')}
+										className={cn({
+											'focus-visible:ring-red-500': errors.email
+
+										})}
+										placeholder='Last name'
+									/>
+									{errors?.email && <p className='text-sm text-red-500 pt-2'>{errors.email.message}</p>}
+								</div>
+							</div>
+							<div className='grid gap-1 py-2'>
 								<Label htmlFor='email'>Email</Label>
 								<Input
 									{...register('email')}
@@ -83,7 +109,19 @@ const Page = () => {
 								/>
 								{errors?.email && <p className='text-sm text-red-500 pt-2'>{errors.email.message}</p>}
 							</div>
-							<div className='grip gap-1 py-2'>
+							<div className='grid gap-1 py-2'>
+								<Label htmlFor='email'>Username</Label>
+								<Input
+									{...register('email')}
+									className={cn({
+										'focus-visible:ring-red-500': errors.email
+
+									})}
+									placeholder='Username'
+								/>
+								{errors?.email && <p className='text-sm text-red-500 pt-2'>{errors.email.message}</p>}
+							</div>
+							<div className='grid gap-1 py-2'>
 								<Label htmlFor='password'>Password</Label>
 								<Input
 									{...register('password')}
@@ -95,6 +133,19 @@ const Page = () => {
 									placeholder='Password'
 								/>
 								{errors?.password && <p className='text-sm text-red-500 pt-2'>{errors.password.message}</p>}
+							</div>
+							<div className='grid gap-1 py-2'>
+								<Label htmlFor='confirmPassword'>Confirm password</Label>
+								<Input
+									{...register('confirmPassword')}
+									type='password'
+									className={cn({
+										'focus-visible:ring-red-500': errors.password
+
+									})}
+									placeholder='Password'
+								/>
+								{errors?.confirmPassword && <p className='text-sm text-red-500 pt-2'>{errors.confirmPassword.message}</p>}
 							</div>
 							<Button>{isLoading ? 'Loading...' : 'Sign up'}</Button>
 						</div>
