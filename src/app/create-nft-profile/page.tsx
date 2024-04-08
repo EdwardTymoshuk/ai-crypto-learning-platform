@@ -5,16 +5,19 @@ import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import PageHeader from '@/components/PageHeader'
 import ProgressLine from '@/components/ProgressLine'
 import { Button } from '@/components/ui/button'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { cn } from '@/lib/utils'
+import { CHOOSE_PLAN, CHOOSE_PLAN_TYPE } from '@/config'
+import { cn, formatPrice } from '@/lib/utils'
 import { CreateNFTProfileCredentialsValidator, TCreateNFTProfileCredentialsValidator } from '@/lib/validators/CredentialsValidators'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { MdInfoOutline } from "react-icons/md"
 import { toast } from 'sonner'
@@ -22,18 +25,27 @@ import { ZodError } from 'zod'
 import { useUser } from '../context/UserContext'
 
 const Page = () => {
+	const { user, setUser } = useUser()
+	const router = useRouter()
+	const { data: session } = useSession()
+
+	const [choosenPlan, setChoosenPlan] = useState<CHOOSE_PLAN_TYPE>()
+	const activeCardIndexRef = useRef<number | null | undefined>(user?.plan)
+	const plan: CHOOSE_PLAN_TYPE | undefined = choosenPlan
+
 	const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm<TCreateNFTProfileCredentialsValidator>({
 		resolver: zodResolver(CreateNFTProfileCredentialsValidator),
 		mode: 'onChange',
 	})
-	const { setUser } = useUser()
-	const router = useRouter()
-
-	const { data: session } = useSession()
 	const userEmail = session?.user.email || ''
 	const data = { ...getValues(), isCompleted: true }
 
 	const userData = api.user.getUser.useQuery(userEmail)
+
+	useEffect(() => {
+		activeCardIndexRef.current = user?.plan
+		setChoosenPlan(CHOOSE_PLAN[Number(activeCardIndexRef.current) | 0])
+	}, [user])
 
 	const { mutate, isLoading } = api.user.updateUser.useMutation({
 		onError: (err) => {
@@ -67,11 +79,11 @@ const Page = () => {
 				title='Create NFT profile'
 				subtitle='Let&apos;s get to know each other better'
 			/>
-			<ProgressLine page={4} isCompleted={false} />
-			<div className='flex flex-col mx-auto w-full justify-center space-y-6 sm:w-[450px]'>
+			<ProgressLine page={3} isCompleted={false} />
+			<div className='flex flex-col-reverse md:flex-row py-10 my-auto mx-auto w-full justify-center gap-6'>
 				<div className='grid gap-6 w-full'>
 					<h3 className="scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">Hi {userData?.data?.name || 'there'}!</h3>
-					<span className='text-muted-foreground'>It&apos;s almost done! We&apos;d be very happy to know You better, tell us a little about yourself.</span>
+					<span className='text-muted'>It&apos;s almost done! We&apos;d be very happy to know You better, tell us a little about yourself.</span>
 					<Separator />
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className='grid gap-2'>
@@ -84,7 +96,7 @@ const Page = () => {
 												<TooltipTrigger onClick={(e) => e.stopPropagation()}>
 													<MdInfoOutline />
 												</TooltipTrigger>
-												<TooltipContent>
+												<TooltipContent className='text-text-primary'>
 													<p>Industry you&apos;re currently working in</p>
 												</TooltipContent>
 											</Tooltip>
@@ -193,6 +205,27 @@ const Page = () => {
 
 						</div>
 					</form>
+				</div>
+				<Separator orientation='vertical' className='h-auto' />
+				<div className='space-y-2 w-full'>
+					<h3 className="scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">Choosen plan:</h3>
+					<Card className={`bg-primary border-0 border-t-8 border-plan-${plan?.color}`}>
+						<CardHeader>
+							<CardTitle className='flex flex-row justify-between'>
+								<p className='text-text-primary'>{plan?.price.label}</p>
+								<p className='font-medium text-text-primary'>
+									{plan && plan.price && typeof plan.price.price === 'number' ? formatPrice(plan.price.price, { removeTrailingZeros: true }) : ''}
+								</p>
+							</CardTitle>
+							<CardDescription className='text-sm text-text-primary/80 pt-2'>
+								{plan?.description}
+							</CardDescription>
+						</CardHeader>
+					</Card>
+					<Button
+						className='float-end rounded-lg'
+						onClick={() => router.push('/plans')}
+					>Change</Button>
 				</div>
 			</div>
 		</MaxWidthWrapper>

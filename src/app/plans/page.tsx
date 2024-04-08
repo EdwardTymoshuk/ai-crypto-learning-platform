@@ -6,7 +6,6 @@ import PageHeader from '@/components/PageHeader'
 import PlanCard from '@/components/PlanCard'
 import ProgressLine from '@/components/ProgressLine'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { CHOOSE_PLAN } from '@/config'
 import { cn } from '@/lib/utils'
 import { signOut } from 'next-auth/react'
@@ -46,7 +45,7 @@ const Page = () => {
 				...prevUser!,
 				plan: activeCardIndex !== null ? activeCardIndex : undefined
 			}))
-			router.push('/payment')
+			router.push('/create-nft-profile')
 		}
 	})
 
@@ -67,7 +66,7 @@ const Page = () => {
 			/>
 			<Button variant='secondary' onClick={() => signOut()}>Log out</Button>
 			<ProgressLine page={2} isCompleted={isCompleted} />
-			<div className='grid grid-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 lg:gap-0 w-full py-4 my-14'>
+			<div className='grid grid-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-4 lg:gap-4 w-full py-4 my-14 px-2'>
 				{CHOOSE_PLAN.map((value, index) => (
 					<div key={index} className='flex flex-row group'>
 						<PlanCard
@@ -76,7 +75,6 @@ const Page = () => {
 							isActive={index === activeCardIndex}
 							onClick={() => handleCardClick(index)}
 						/>
-						<Separator orientation='vertical' className='hidden md:block group-last:hidden max-lg:group-even:hidden' />
 					</div>
 				))}
 			</div>

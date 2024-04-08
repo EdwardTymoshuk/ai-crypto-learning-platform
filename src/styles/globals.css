@@ -16,7 +16,7 @@
     --gradient-secondary-from: 216 100% 51%;
     --gradient-secondary-to: 217, 100%, 67%;
 
-    --card: 216 100% 51%;
+    --card: 333 100% 62%;
     --card-foreground: 240 10% 3.9%;
 
     --popover: 251 38% 18%;
@@ -92,5 +92,9 @@
 
   body {
     @apply bg-background text-text-primary;
+  }
+
+  .bg-gradient-primary {
+    @apply bg-gradient-to-tr from-gradient-primary-from to-gradient-primary-to;
   }
 }
