@@ -52,6 +52,11 @@
     --facebook: 222 42% 42%;
     --telegram: 199 84% 55%;
     --linkedin: 204 75% 40%;
+
+    --success: 134 61% 41%;
+    --danger: 360 100% 63%;
+    --warning: 29 100% 60%;
+    --info: 209 100% 60%;
   }
 
   /* .dark {
