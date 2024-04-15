@@ -1,3 +1,6 @@
+import { IconType } from 'react-icons'
+import { MdOutlineHome, MdOutlineShoppingBag, MdOutlineTrendingUp } from 'react-icons/md'
+
 export type CHOOSE_PLAN_TYPE = {
     price: {
         label: string | undefined,
@@ -7,6 +10,11 @@ export type CHOOSE_PLAN_TYPE = {
     options: string[],
     recomended: boolean,
     color: string
+}
+export type MENU_ITEMS_TYPE = {
+    name: string,
+    icon: IconType,
+    sub?: string[],
 }
 
 export const CHOOSE_PLAN: CHOOSE_PLAN_TYPE[] = [
@@ -75,5 +83,21 @@ export const CHOOSE_PLAN: CHOOSE_PLAN_TYPE[] = [
         ],
         recomended: false,
         color: 'vip',
+    },
+]
+
+export const MENU_ITEMS: MENU_ITEMS_TYPE[] = [
+    {
+        name: 'Home',
+        icon: MdOutlineHome,
+    },
+    {
+        name: 'Ai careera trainer',
+        icon: MdOutlineTrendingUp,
+    },
+    {
+        name: 'Marketplace',
+        icon: MdOutlineShoppingBag,
+        sub: ['Reward club', 'Courses', 'Events', 'AI tools']
     },
 ]
