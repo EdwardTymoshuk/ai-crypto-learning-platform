@@ -1,8 +1,8 @@
 'use client'
 
 import { api } from '@/app/_trpc/client'
+import AuthPageHeader from '@/components/AuthPageHeader'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
-import PageHeader from '@/components/PageHeader'
 import PlanCard from '@/components/PlanCard'
 import ProgressLine from '@/components/ProgressLine'
 import { Button } from '@/components/ui/button'
@@ -60,7 +60,7 @@ const Page = () => {
 
 	return (
 		<MaxWidthWrapper className='min-h-screen py-12'>
-			<PageHeader
+			<AuthPageHeader
 				title='Choose plan to fit your needs'
 				subtitle='Read all the plans and choose the one that perfectly suits your needs'
 			/>

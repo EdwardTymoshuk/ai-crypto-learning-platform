@@ -1,7 +1,7 @@
 'use client'
 
+import AuthPageHeader from '@/components/AuthPageHeader'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
-import PageHeader from '@/components/PageHeader'
 import ProgressLine from '@/components/ProgressLine'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -64,7 +64,7 @@ const Page = () => {
 
 	return (
 		<MaxWidthWrapper className='flex flex-col min-h-screen py-12'>
-			<PageHeader
+			<AuthPageHeader
 				title='Payment page'
 				subtitle='Provide your payment details to continue creating an account'
 			/>

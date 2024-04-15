@@ -1,8 +1,8 @@
 'use client'
 
 import { api } from '@/app/_trpc/client'
+import AuthPageHeader from '@/components/AuthPageHeader'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
-import PageHeader from '@/components/PageHeader'
 import ProgressLine from '@/components/ProgressLine'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -75,7 +75,7 @@ const Page = () => {
 
 	return (
 		<MaxWidthWrapper>
-			<PageHeader
+			<AuthPageHeader
 				title='Create NFT profile'
 				subtitle='Let&apos;s get to know each other better'
 			/>
