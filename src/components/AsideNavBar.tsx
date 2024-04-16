@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { MdClose } from 'react-icons/md'
+import { SiStarship } from 'react-icons/si'
 import NavBar from './NavBar'
 import { Button } from './ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
@@ -17,7 +17,8 @@ const AsideNavBar = () => {
 		<div className='hidden md:fixed md:flex border-r min-h-screen max-h-screen w-full flex-col gap-2 border-zinc-800 bg-background max-w-60 z-20'>
 			<div className='flex h-14 items-center border-b p-4 lg:h-14 lg:px-6 justify-center'>
 				<Link href='/' className='flex items-center gap-2 font-semibol'>
-					<Image src='/images/logo.png' alt='logo' width={96} height={96} />
+					{/* <Image src='/images/logo.png' alt='logo' width={96} height={96} /> */}
+					<div className='flex flex-row items-center gap-2'><span className='text-primary'>Astro</span><SiStarship size={24} className='text-primary' /><span className='text-secondary'>Genius.</span></div>
 				</Link>
 			</div>
 			<div className='flex-1 p-4'>

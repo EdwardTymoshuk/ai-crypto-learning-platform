@@ -2,20 +2,28 @@
 
 import { api } from '@/app/_trpc/client'
 import { useUser } from '@/app/context/UserContext'
+import { formatPrice } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Session } from 'next-auth'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { GiUpgrade } from 'react-icons/gi'
+import { MdOutlineEdit } from "react-icons/md"
 import AsideNavBar from './AsideNavBar'
 import Header from './Header'
-
-import { formatPrice } from '@/lib/utils'
-import { GiUpgrade } from "react-icons/gi"
+import MaxWidthWrapper from './MaxWidthWrapper'
+import PageBlock from './PageBlock'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
 
 
 const HomeComponent = ({ session }: { session: Session | null }) => {
   const router = useRouter()
   const { user, setUser } = useUser()
+
+  const [isEditing, setIsEditing] = useState(false)
+  const [profileQuote, setProfileQuote] = useState(`Let's do something great`)
 
   if (!session) console.log('No session')
 
@@ -31,70 +39,74 @@ const HomeComponent = ({ session }: { session: Session | null }) => {
   }
 
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] text-white max-h-screen">
-      <div className="hidden border-r border-zinc-800 md:block bg-background">
-        <AsideNavBar />
-      </div>
-      <div className='flex flex-col overflow-auto'>
-        <Header user={session?.user} />
-        <div className='flex flex-col px-8 bg-gradient-to-tr from-gradient-primary-from to-gradient-primary-to h-screen'>
-          <div className='text-2xl font-bold p-4'>
-            <h2>Profile page</h2>
-          </div>
-          <div className='flex flex-row gap-4 h-full'>
-            <div className='flex justify-center w-full h-fit rounded-lg bg-opacity-50 bg-zinc-800 shadow-md'>
-              <div className="w-full text-white transition-shadow shadow-xl hover:shadow-xl min-w-max">
-                <div className="w-full h-48 bg-zinc-800 rounded-lg relative">
-                  <Image src='/images/profile-wallpaper.jpeg' alt='wallpaper' fill objectFit='cover' className='rounded-t-lg' />
-                </div>
-                <div
-                  className="h-48 w-48 relative -top-24 mx-auto rounded-full items-end justify-end flex bg-primary ring-4 ring-plan-vip">
-                  <Image className="rounded-full relative" src="/images/avatar.jpg" height={192} width={192} alt="avatar" />
-                </div>
-                <div className="flex items-center p-4">
-                  <div className="relative flex flex-col items-center w-full">
-                    <div className="flex flex-col space-y-1 justify-center items-center -mt-12 w-full">
-                      <span className="text-md whitespace-nowrap text-white font-bold">Edward</span>
-                      <span className="text-md whitespace-nowrap text-gray-200">edward.tymoshuk.dev@gmail.com</span>
-                      <p className="text-sm text-gray-300 italic">
-                        "Let&apos;s do something greate"
-                      </p>
-                      <div className="py-2 flex space-x-2">
-                        <button className="flex justify-center max-h-max whitespace-nowrap focus:outline-none  focus:ring  focus:border-blue-300 rounded max-w-max border bg-transparent border-primary text-primary hover:text-black px-4 py-1 items-center hover:bg-primary"><span className="mr-2"></span>Edit profile<span className="ml-2"></span></button>
-                        <button className="flex justify-center  max-h-max whitespace-nowrap focus:outline-none  focus:ring  focus:border-blue-300 rounded max-w-max text-gray-100 bg-primary hover:bg-primary/80 px-4 py-1 items-center hover:shadow-lg"><span className="mr-2"><GiUpgrade /></span>Upgrade plan <span className="ml-2"></span></button>
+    <div className='flex min-h-screen w-full h-auto bg-gradient-to-tr from-gradient-primary-from to-gradient-primary-to'>
+      <AsideNavBar />
+      <Header user={session?.user} />
+      <MaxWidthWrapper>
+        <div className='flex flex-col overflow-auto w-full md:pl-60 mt-14'>
+          <div className='flex flex-col px-8 min-h-screen h-auto'>
+            {/* <PageHeader title='Profile' /> */}
+            <div className='flex flex-col lg:flex-row pt-4 gap-4 h-full'>
+              <PageBlock>
+                <div className='w-full transition-shadow shadow-xl hover:shadow-xl min-w-max'>
+                  <div className='w-full h-48 bg-zinc-800 rounded-lg relative z-0'>
+                    <Image src='/images/profile-wallpaper.jpeg' alt='wallpaper' fill objectFit='cover' className='rounded-t-lg' />
+                    {isEditing && <Button variant='link' className='m-2 p-2 right-0 absolute hover:brightness-110'><MdOutlineEdit size={24} /></Button>}
+                  </div>
+                  <div
+                    className='group h-48 w-48 relative -top-24 mx-auto rounded-full items-end justify-end flex bg-primary ring-4 ring-plan-vip'>
+                    {isEditing &&
+                      <div className='absolute z-10 w-full h-full bg-text-secondary rounded-full opacity-50 group-hover:opacity-60'>
+                        <Button variant='link' className='w-full h-full mx-auto my-auto absolute group-hover:brightness-110'><MdOutlineEdit size={24} /></Button>
                       </div>
-                      <div
-                        className="py-4 flex justify-center items-center w-full divide-x divide-gray-400 divide-solid">
-                        <span className="text-center px-2"><span className="font-bold text-gray-50">56</span><span className="text-gray-100"> followers</span></span><span className="text-center px-2"><span className="font-bold text-gray-50">112</span><span className="text-gray-100"> following</span></span><span className="text-center px-2"><span className="font-bold text-gray-50">27</span><span className="text-gray-100"> repos</span></span>
+                    }
+                    <Image className='rounded-full relative' src='/images/avatar.jpg' height={192} width={192} alt='avatar' />
+                  </div>
+                  <div className='flex items-center p-4'>
+                    <div className='relative flex flex-col items-center w-full'>
+                      <div className='flex flex-col space-y-1 justify-center items-center -mt-12 w-full'>
+                        <span className='text-md whitespace-nowrap text-info font-bold'>Edward</span>
+                        <span className='text-md whitespace-nowrap text-text-primary'>edward.tymoshuk.dev@gmail.com</span>
+                        {!isEditing ?
+                          <p className='text-sm text-text-primary/90 italic'>
+                            {`"${profileQuote}"`}
+                          </p> :
+                          <Input value={profileQuote} onChange={(e) => setProfileQuote(e.target.value)} className='w-1/2' />
+                        }
+
+                        <div className='py-2 flex space-x-2'>
+                          <Button variant='transparent' onClick={() => setIsEditing(!isEditing)}>{!isEditing ? 'Edit profile' : 'Save'}</Button>
+                          <Button><GiUpgrade />Upgrade plan</Button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className='flex flex-col w-3/4 gap-4'>
-              <div className='flex flex-col p-8 justify-center items-center w-full h-fit rounded-lg bg-opacity-50 bg-zinc-800 shadow-md border-b-8 border-primary'>
-                <div className='flex justify-center'>
-                  <span className='text-gray-200'>Wallet balance</span>
-                </div>
-                <div>
-                  <span className='font-bold text-4xl'>
-                    {formatPrice(14500)}
-                  </span>
-                </div>
-              </div>
-              <div className='flex flex-col p-8 justify-center items-center w-full h-fit rounded-lg bg-opacity-50 bg-zinc-800 shadow-md border-b-8 border-plan-vip'>
-                <div>
-                  <span className='text-gray-200'>Membership status</span>
-                </div>
-                <div className='font-bold text-4xl'>
-                  <span className='text-vip'>VIP</span>
-                </div>
+              </PageBlock>
+              <div className='flex flex-row lg:flex-col w-full lg:w-3/4 gap-4'>
+                <PageBlock className='p-8 border-b-8 border-info'>
+                  <div className='flex justify-center'>
+                    <span className='text-text-primary'>Wallet balance</span>
+                  </div>
+                  <div>
+                    <span className='font-bold text-4xl text-info'>
+                      {formatPrice(14500)}
+                    </span>
+                  </div>
+                </PageBlock>
+                <PageBlock className='p-8 border-b-8 border-plan-vip'>
+                  <div>
+                    <span className='text-text-primary'>Membership status</span>
+                  </div>
+                  <div className='font-bold text-4xl'>
+                    <span className='text-plan-vip'>VIP</span>
+                  </div>
+                </PageBlock>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </MaxWidthWrapper>
     </div>
   )
 }
